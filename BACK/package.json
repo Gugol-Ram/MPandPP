@@ -17,7 +17,9 @@
     "express": "^4.19.2",
     "joi": "^17.13.3",
     "mercadopago": "^1.5.16",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.3.2",
+    "paypal-rest-sdk": "^1.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
