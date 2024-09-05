@@ -28,3 +28,5 @@ paymentRouterMP.get("/failure", (req, res) => {
     // res.status(200).json({ message: "Pendiente" });Mensaje de prueba para mostrar "algo" mientras no tenia a donde redirigir
   });
 });
+
+module.exports = paymentRouterMP;
