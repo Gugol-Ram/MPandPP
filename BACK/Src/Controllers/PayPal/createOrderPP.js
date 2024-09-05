@@ -41,7 +41,7 @@ const createPayPalOrder = async (req, res) => {
       purchase_units: [
         {
           amount: {
-            currency_code: "ARS",
+            currency_code: "USD", //Si coloco ARS no lo toma devuelve array vacío, averiguar por qué⚠️
             value: totalPrice.toFixed(2), //pa que pingo el fixed¿
           },
         },
