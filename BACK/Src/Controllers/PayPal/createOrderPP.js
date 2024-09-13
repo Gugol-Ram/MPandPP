@@ -44,6 +44,11 @@ const createPayPalOrder = async (req, res) => {
             currency_code: "USD", //Si coloco ARS no lo toma devuelve array vacío, averiguar por qué⚠️
             value: totalPrice.toFixed(2), //pa que pingo el fixed¿
           },
+          redirect_urls: {
+            //CREAR LAS RUTAS⚠️...
+            return_url: "http://localhost:3001/pp-Payment/success", // Redirige después de pago exitoso
+            cancel_url: "http://localhost:3001/pp-Payment/failure", // Redirige si el pago es cancelado
+          },
         },
       ],
     };
@@ -61,6 +66,7 @@ const createPayPalOrder = async (req, res) => {
     res.status(200).json({
       id: order.id,
       status: order.status,
+      links: order.links,
     });
   } catch (error) {
     console.error("Error creating PayPal order:", error);
@@ -71,7 +77,7 @@ const createPayPalOrder = async (req, res) => {
 const capturePayPalOrder = async (req, res) => {
   try {
     const accessToken = await generateAccessToken();
-    const orderID = req.params.id;
+    const orderID = req.params.orderID;
     console.log(req.params);
 
     const url = `${base}/v2/checkout/orders/${orderID}/capture`;
