@@ -8,4 +8,10 @@ const paymentRouterPP = express.Router();
 paymentRouterPP.post("/create-order", createPayPalOrder);
 paymentRouterPP.post("/capture-order/:orderID", capturePayPalOrder);
 
+paymentRouterPP.get("/success", (req, res) => {
+  console.log("PayPal data: ", req.query);
+  // res.status(200).json({ message: "Payment Aproved" });
+  res.redirect("http://localhost:5173/");
+});
+
 module.exports = paymentRouterPP;
