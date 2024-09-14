@@ -1,6 +1,6 @@
 // import React from "react";
-import products from "../Utils/products";
-import Card from "./Card";
+import products from "../../Utils/products";
+import Card from "../Card/Card";
 
 export default function Cards() {
   return (

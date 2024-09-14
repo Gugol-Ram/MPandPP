@@ -4,10 +4,16 @@ import axios from "axios";
 export default function Card({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState("");
+  const [orderId, setOrderId] = useState(""); // Agregamos estado para orderId
 
   const initialOptions = {
-    "client-id": "...",
+    "client-id":
+      "AZNISSjWiMhUXHFw_wQ8_d67RO59sA4W_X4St_y9iCfqV119uqH7QCFwyuhxreoP007S2VyF7Ejjh0ek",
     currency: "USD",
+  };
+
+  const quantityIncrement = () => {
+    product.stock > quantity ? setQuantity(quantity + 1) : null;
   };
 
   const quantityDecrement = () => {
@@ -23,29 +29,56 @@ export default function Card({ product }) {
           cart: [{ id: product.id, quantity, price: product.price }],
         }
       );
-      setOrderId(response.data.id); // Guarda el ID de la orden en el estado
-
-      return response.data.id; // Devuelve el ID de la orden para el siguiente paso
+      return response.data; // Devuelve toda la respuesta que contiene approvalLink
     } catch (error) {
       console.error("Error creating order:", error);
     }
   };
 
+  // BUCLE ETERNO
+  // const createPayPalOrder = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:3001/pp-Payment/create-order",
+  //       {
+  //         cart: [{ id: product.id, quantity, price: product.price }],
+  //       }
+  //     );
+  //     setOrderId(response.data.id); // Guarda el ID de la orden en el estado
+
+  //     return response.data.id; // Devuelve el ID de la orden para el siguiente paso
+  //   } catch (error) {
+  //     console.error("Error creating order:", error);
+  //   }
+  // };
+
   const handlePayPal = async () => {
     try {
-      const orderID = await createPayPalOrder(); // Obtén el ID de la orden
-      if (orderID) {
-        window.location.href = `http://localhost:3001/payment/paypal/approve?orderID=${orderID}`;
+      const response = await createPayPalOrder(); // Obtén la respuesta completa
+      if (response && response.approvalLink) {
+        window.location.href = response.approvalLink; // Redirige al usuario a PayPal para completar el pago
       }
     } catch (error) {
       console.error("Error handling PayPal payment:", error);
     }
   };
 
+  // BUCLE ETERNO
+  // const handlePayPal = async () => {
+  //   try {
+  //     const orderID = await createPayPalOrder(); // Obtén el ID de la orden
+  //     if (orderID) {
+  //       window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+  //     }
+  //   } catch (error) {
+  //     console.error("Error handling PayPal payment:", error);
+  //   }
+  // };
+
   // Pago con Mercado Pago
   const checkOut = () => {
     axios
-      .post("http://localhost:3001/payment/create-order", {
+      .post("http://localhost:3001/pp-Payment/create-order", {
         ...product,
         quantity,
       })
