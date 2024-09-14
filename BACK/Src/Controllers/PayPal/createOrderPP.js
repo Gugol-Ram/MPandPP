@@ -25,6 +25,63 @@ async function generateAccessToken() {
   return data.access_token;
 }
 
+// const createPayPalOrder = async (req, res) => {
+//   try {
+//     const accessToken = await generateAccessToken();
+
+//     const cart = req.body.cart || [];
+//     const totalPrice = cart.reduce(
+//       (total, item) => total + item.price * item.quantity,
+//       0
+//     );
+
+//     const url = `${base}/v2/checkout/orders`;
+//     const payload = {
+//       intent: "CAPTURE",
+//       purchase_units: [
+//         {
+//           amount: {
+//             currency_code: "USD", //Si coloco ARS no lo toma devuelve array vacío, averiguar por qué⚠️
+//             value: totalPrice.toFixed(2), //pa que pingo el fixed¿
+//           },
+//           application_context: {
+//             return_url: "http://localhost:3001/pp-Payment/success",
+//             cancel_url: "http://localhost:3001/pp-Payment/failure",
+//           },
+//           // redirect_urls: {
+//           //   //CREAR LASRUTAS⚠️...
+//           //   return_url: "http://localhost:3001/pp-Payment/success", // Redirige después de pago exitoso
+//           //   cancel_url: "http://localhost:3001/pp-Payment/failure", // Redirige si el pago es cancelado
+//           // },
+//         },
+//       ],
+//     };
+
+//     const response = await fetch(url, {
+//       method: "POST",
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(payload),
+//     });
+
+//     const order = await response.json();
+//     const approvalLink = order.links.find(
+//       (link) => link.rel === "approve"
+//     )?.href;
+
+//     // Envía el ID de la orden, el estado y el enlace de aprobación al frontend
+//     res.status(200).json({
+//       id: order.id,
+//       status: order.status,
+//       approvalLink: approvalLink,
+//     });
+//   } catch (error) {
+//     console.error("Error creating PayPal order:", error);
+//     res.status(500).json({ error: "Failed to create PP order" });
+//   }
+// };
 const createPayPalOrder = async (req, res) => {
   try {
     const accessToken = await generateAccessToken();
@@ -41,16 +98,15 @@ const createPayPalOrder = async (req, res) => {
       purchase_units: [
         {
           amount: {
-            currency_code: "USD", //Si coloco ARS no lo toma devuelve array vacío, averiguar por qué⚠️
-            value: totalPrice.toFixed(2), //pa que pingo el fixed¿
-          },
-          redirect_urls: {
-            //CREAR LAS RUTAS⚠️...
-            return_url: "http://localhost:3001/pp-Payment/success", // Redirige después de pago exitoso
-            cancel_url: "http://localhost:3001/pp-Payment/failure", // Redirige si el pago es cancelado
+            currency_code: "USD",
+            value: totalPrice.toFixed(2),
           },
         },
       ],
+      application_context: {
+        return_url: "http://localhost:3001/pp-Payment/success",
+        cancel_url: "http://localhost:3001/pp-Payment/failure",
+      },
     };
 
     const response = await fetch(url, {
@@ -63,10 +119,17 @@ const createPayPalOrder = async (req, res) => {
     });
 
     const order = await response.json();
+
+    // Encuentra el enlace de aprobación
+    const approvalLink = order.links.find(
+      (link) => link.rel === "approve"
+    )?.href;
+
+    // Envía el ID de la orden, el estado y el enlace de aprobación al frontend
     res.status(200).json({
       id: order.id,
       status: order.status,
-      links: order.links,
+      approvalLink: approvalLink,
     });
   } catch (error) {
     console.error("Error creating PayPal order:", error);
