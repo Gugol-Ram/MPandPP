@@ -1,9 +1,14 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SuccessPage = () => {
   const location = useLocation();
+  const navigate = useNavigate(); //hook de navegacion programatica, sin necesidad de utilizar Link
   const queryParams = new URLSearchParams(location.search);
   const paymentStatus = queryParams.get("payment");
+
+  const handleGoHome = () => {
+    navigate("/");
+  };
 
   return (
     <div>
@@ -33,6 +38,13 @@ const SuccessPage = () => {
           </p>
         </div>
       )}
+
+      <button
+        onClick={handleGoHome}
+        style={{ marginTop: "20px", padding: "10px 20px" }}
+      >
+        Back to Home
+      </button>
     </div>
   );
 };
