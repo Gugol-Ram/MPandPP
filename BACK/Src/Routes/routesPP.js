@@ -10,8 +10,12 @@ paymentRouterPP.post("/capture-order/:orderID", capturePayPalOrder);
 
 paymentRouterPP.get("/success", (req, res) => {
   console.log("PayPal data: ", req.query);
-  // res.status(200).json({ message: "Payment Aproved" });
-  res.redirect("http://localhost:5173/");
+  res.redirect("http://localhost:5173/success?payment=success");
 });
+
+// paymentRouterPP.get("/failed", (req, res) => {
+//   console.log("PayPal data: ", req.query);
+//   res.redirect("http://localhost:5173/failed?payment=failed");
+// });
 
 module.exports = paymentRouterPP;
