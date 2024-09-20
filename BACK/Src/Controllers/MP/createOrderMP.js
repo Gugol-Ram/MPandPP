@@ -24,9 +24,9 @@ const createOrder = (req, res) => {
       },
     ],
     back_urls: {
-      success: "http://localhost:3001/payment/success", // cuando es pago exitoso nos regresa al perfil de padre donde realiza el pago
-      failure: "http://localhost:3001/payment/failure",
-      pending: "http://localhost:3001/payment/pending",
+      success: "http://localhost:3001/mp-Payment/success",
+      failure: "http://localhost:3001/mp-Payment/failure",
+      pending: "http://localhost:3001/mp-Payment/pending",
     },
   };
 
