@@ -20,6 +20,19 @@ export default function Card({ product }) {
     quantity > 1 ? setQuantity(quantity - 1) : null;
   };
 
+  // Pago con Mercado Pago
+  const checkOut = () => {
+    axios
+      .post("http://localhost:3001/mp-Payment/create-order", {
+        ...product,
+        quantity,
+      })
+      .then((response) => {
+        window.location.href = response.data.body.init_point;
+      })
+      .catch((error) => console.log(error.message));
+  };
+
   // Pago PayPal
   const createPayPalOrder = async () => {
     try {
@@ -54,38 +67,13 @@ export default function Card({ product }) {
 
   const handlePayPal = async () => {
     try {
-      const response = await createPayPalOrder(); // Obtén la respuesta completa
+      const response = await createPayPalOrder();
       if (response && response.approvalLink) {
         window.location.href = response.approvalLink; // Redirige al usuario a PayPal para completar el pago
       }
     } catch (error) {
       console.error("Error handling PayPal payment:", error);
     }
-  };
-
-  // BUCLE ETERNO
-  // const handlePayPal = async () => {
-  //   try {
-  //     const orderID = await createPayPalOrder(); // Obtén el ID de la orden
-  //     if (orderID) {
-  //       window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
-  //     }
-  //   } catch (error) {
-  //     console.error("Error handling PayPal payment:", error);
-  //   }
-  // };
-
-  // Pago con Mercado Pago
-  const checkOut = () => {
-    axios
-      .post("http://localhost:3001/pp-Payment/create-order", {
-        ...product,
-        quantity,
-      })
-      .then((response) => {
-        window.location.href = response.data.body.init_point;
-      })
-      .catch((error) => console.log(error.message));
   };
 
   return (

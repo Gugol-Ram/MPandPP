@@ -21,7 +21,7 @@ const SuccessPage = () => {
           </p>
         </div>
       )}
-      {paymentStatus === "failed" && (
+      {/* {paymentStatus === "failed" && (
         <div>
           <h1>Payment Failed</h1>
           <p>
@@ -37,7 +37,7 @@ const SuccessPage = () => {
             support if you have any questions.
           </p>
         </div>
-      )}
+      )} */}
 
       <button
         onClick={handleGoHome}

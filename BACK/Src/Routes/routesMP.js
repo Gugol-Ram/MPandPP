@@ -3,7 +3,7 @@ const createOrder = require("../Controllers/MP/createOrderMP");
 const paymentRouterMP = express.Router();
 
 // Orden de pago(para redirigir a la pagina de ML a pagar)
-paymentRouterMP.post("/mp-create-order", createOrder);
+paymentRouterMP.post("/create-order", createOrder);
 
 // Segun la respuesta obtenida de MP:
 paymentRouterMP.get("/success", (req, res) => {
