@@ -12,15 +12,13 @@ const SuccessPage = () => {
 
   return (
     <div>
-      {paymentStatus === "success" && (
-        <div>
-          <h1>Payment Successful!</h1>
-          <p>
-            Your payment was processed successfully. Thank you for your
-            purchase.
-          </p>
-        </div>
-      )}
+      <div>
+        <h1>Payment Successful!</h1>
+        <p>
+          Your payment was processed successfully. Thank you for your purchase.
+        </p>
+      </div>
+
       {/* {paymentStatus === "failed" && (
         <div>
           <h1>Payment Failed</h1>
@@ -43,7 +41,7 @@ const SuccessPage = () => {
         onClick={handleGoHome}
         style={{ marginTop: "20px", padding: "10px 20px" }}
       >
-        Back to Home
+        Back to Home Page
       </button>
     </div>
   );
