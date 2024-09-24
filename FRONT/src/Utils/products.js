@@ -7,7 +7,7 @@ export default [
     image: "https://tosellihogar.com.ar/wp-content/uploads/2023/01/4682-8.jpg",
     stock: 5,
     condition: "new",
-    price: 2,
+    price: 600,
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ export default [
   },
   {
     id: 3,
-    title: "SDHC CARD 16GB MITSUBISHI",
+    title: "Micro SD card 16GB Verbatim",
     description: "Memoria estándar SDHC de 16 GB",
     image:
       "https://ar.wiautomation.com/public/images/landing/anticipa/product/ixr5kSQBju7Pi7pvKubx0cCQDzxzM0xa3Hlr00yP7SF08CUNTw2NwdbmOqJl.jpg",
@@ -44,8 +44,7 @@ export default [
     id: 5,
     title: "APPLE IPHONE 13 PRO 512GB GREEN",
     description: "Pantalla Super Retina XDR de 6.7 pulgadas con ProMotion",
-    image:
-      "https://front.dev.malditohard.com.ar/img/migration/APPLE--IPHONE-13-PRO-512GB-GREEN.webp",
+    image: "https://centinelapc.com.ar/wp-content/uploads/2024/03/GREEN.jpg",
     stock: 20,
     condition: "new",
     price: 24,
