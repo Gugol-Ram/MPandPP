@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+const { VITE_CLIENT_ID } = import.meta.env;
 
 export default function Card({ product }) {
   const [quantity, setQuantity] = useState(1);
@@ -7,8 +8,7 @@ export default function Card({ product }) {
   const [orderId, setOrderId] = useState(""); // Agregamos estado para orderId
 
   const initialOptions = {
-    "client-id":
-      "AZNISSjWiMhUXHFw_wQ8_d67RO59sA4W_X4St_y9iCfqV119uqH7QCFwyuhxreoP007S2VyF7Ejjh0ek",
+    "client-id": { VITE_CLIENT_ID },
     currency: "USD",
   };
 
